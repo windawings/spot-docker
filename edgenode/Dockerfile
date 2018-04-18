@@ -1,12 +1,6 @@
-#########################################################################################
-# This dockerfile is derived from loicmathieu/cloudera-cdh and will setup an edge node to
-# works with the other cloudera containers.
-# It also contains some pig/hive script and CSV test files to start with
-#
-#########################################################################################
-FROM loicmathieu/cloudera-cdh:cdh-5.14.0
+FROM windawings/cloudera-cdh:latest
 
-MAINTAINER Loic Mathieu <loicmathieu@free.fr>
+MAINTAINER windawings <windawings@foxmail.com>
 
 #install pig, hive, flume and scoop 
 RUN yum -y install pig hive flume-ng sqoop2 spark-worker && rm -rf /var/cache/yum/*
@@ -18,9 +12,13 @@ COPY cities.* /
 COPY flume/* /
 RUN chmod +x /start_flume.sh
 
+#setup supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 #create a staging disk to send/get data to/from the cluster
 RUN mkdir /staging
 
 VOLUME /staging
 
-CMD ["bash", "start_flume.sh"]
+#start the supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
