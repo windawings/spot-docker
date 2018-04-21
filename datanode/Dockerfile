@@ -5,7 +5,6 @@ MAINTAINER windawings<windawings@foxmail.com>
 #init datanode directory
 RUN mkdir -p /hdfs/data
 
-#setup supervisor
 #supervisor config
 ADD supervisord.conf /etc/supervisor/conf.d/
 
