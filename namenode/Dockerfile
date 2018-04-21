@@ -3,8 +3,15 @@ FROM windawings/cloudera-cdh:latest
 MAINTAINER windawings <windawings@foxmail.com>
 
 # Copy & Run ENV Init
-ADD config-env.sh /
-RUN  chmod u+x config-env.sh && bash config-env.sh
+RUN yum makecache && yum -y update && yum -y upgrade && \
+        yum -y install hadoop-hdfs-namenode && \
+        yum clean all && rm -rf /var/cache/yum/*
+
+# make dir
+RUN  mkdir -p /hdfs/nm
+
+# init hadoop
+RUN hdfs namenode -format
 
 #supervisor config
 ADD supervisord.conf /etc/supervisor/conf.d/
