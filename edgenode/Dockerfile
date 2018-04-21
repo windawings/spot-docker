@@ -17,9 +17,5 @@ RUN yum -y install pig hive flume-ng sqoop2 spark-worker && \
 #setup supervisor
 ADD supervisord.conf /etc/supervisor/conf.d/
 
-#create a staging disk to send/get data to/from the cluster
-#RUN mkdir /staging
-#VOLUME /staging
-
 #start the supervisor
 CMD ["supervisord", "-n"]
