@@ -1,1 +1,1 @@
-flume-ng agent --conf conf --conf-file flume_httpd.conf --name collector -Dflume.root.logger=INFO,console >> /var/log/flume.log
+flume-ng agent --conf conf --conf-file /usr/lib/apache-flume-1.6.0-bin/conf/flume_httpd.conf --name collector -Dflume.root.logger=INFO,console >> /var/log/flume.log
