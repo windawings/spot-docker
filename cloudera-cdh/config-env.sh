@@ -27,4 +27,4 @@ mkdir -p /etc/supervisor/conf.d/
 mkdir -p /hdfs/tmp
 
 # ntp
-sudo ntpdate us.pool.ntp.org
+ntpdate us.pool.ntp.org
