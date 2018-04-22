@@ -8,9 +8,6 @@ RUN yum -y install hadoop-hdfs-namenode && yum clean all && rm -rf /var/cache/yu
 # make dir
 RUN  mkdir -p /hdfs/nm
 
-# init hadoop
-RUN hdfs namenode -format
-
 #supervisor config
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
