@@ -13,6 +13,7 @@ sed -i.bak s/^.*"baseurl".*/"baseurl=http:\/\/archive.cloudera.com\/cdh5\/redhat
 sed -i.bak s/^.*"baseurl".*/"baseurl=http:\/\/archive.cloudera.com\/cm5\/redhat\/7\/x86_64\/cm\/$CM_VER\/"/ /etc/yum.repos.d/cloudera-mng.repo
 
 # install hadoop
+yum -y remove wget
 yum -y install hadoop zookeeper  python-pip 
 yum clean all
 rm -rf /var/cache/yum/*
@@ -26,4 +27,4 @@ mkdir -p /etc/supervisor/conf.d/
 mkdir -p /hdfs/tmp
 
 # ntp
-ntpdate us.pool.ntp.org
+sudo ntpdate us.pool.ntp.org

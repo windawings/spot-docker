@@ -12,7 +12,7 @@ RUN  mkdir -p /hdfs/nm
 RUN hdfs namenode -format
 
 #supervisor config
-ADD supervisord.conf /etc/supervisor/conf.d/
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 #expose namenode port
 EXPOSE 8020

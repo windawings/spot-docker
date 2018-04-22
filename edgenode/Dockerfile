@@ -15,7 +15,7 @@ RUN yum -y install pig hive flume-ng sqoop2 spark-worker && \
          chmod +x /start_flume.sh
 
 #setup supervisor
-ADD supervisord.conf /etc/supervisor/conf.d/
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 #start the supervisor
 CMD ["supervisord", "-n"]

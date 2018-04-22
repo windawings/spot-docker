@@ -6,7 +6,7 @@ MAINTAINER windawings<windawings@foxmail.com>
 RUN mkdir -p /hdfs/data
 
 #supervisor config
-ADD supervisord.conf /etc/supervisor/conf.d/
+ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 #expose port
 EXPOSE 50020 50075 8042
