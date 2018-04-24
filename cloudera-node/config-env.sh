@@ -5,21 +5,22 @@ yum -y update && yum -y upgrade
 yum -y install epel-release wget ntp openssh*
 yum -y install python-pip
 
-# get cloudera.repo
+# get cloudera repo
 wget http://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/cloudera-cdh5.repo -O /etc/yum.repos.d/cloudera-cdh5.repo
 wget http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-mng.repo
 sed -i.bak s/^.*"baseurl".*/"baseurl=http:\/\/archive.cloudera.com\/cdh5\/redhat\/7\/x86_64\/cdh\/$CDH_VER\/"/ /etc/yum.repos.d/cloudera-cdh5.repo
-sed -i s/^.*"gpgcheck".*/"gpgcheck = 0"/ /etc/yum.repos.d/cloudera-cdh5.repo
 sed -i.bak s/^.*"baseurl".*/"baseurl=http:\/\/archive.cloudera.com\/cm5\/redhat\/7\/x86_64\/cm\/$CM_VER\/"/ /etc/yum.repos.d/cloudera-mng.repo
-sed -i s/^.*"gpgcheck".*/"gpgcheck = 0"/ /etc/yum.repos.d/cloudera-mng.repo
 
-# get jdk
+# install jdk
 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.rpm -O jdk.rpm
+http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar -O mysql-connector-java.jar
 rpm -i jdk.rpm
+mv mysql-connector-java.jar /usr/java/latest/
 
-# install hadoop
-yum -y remove wget
-yum -y install oracle-j2sdk1.7 cloudera-manager-agent cloudera-manager-daemons hadoop
+# install cloudera
+wget http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.14.2_x86_64.tar.gz -O cm.tar.gz
+tar zxvf cm.tar.gz -C /opt/
+mv /opt/cm-5.10.0 /opt/cm
 
 # install supervisor
 pip install --upgrade pip
@@ -27,18 +28,22 @@ pip install supervisor
 
 # clean
 yum clean all
+yum -y remove wget
 rm -rf /var/cache/yum/*
-rm -f jdk.rpm config-env.sh
+rm -f jdk.rpm config-env.sh cm.tar.gz
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
 
 # config ntp
-echo -e "\nserver s1a.time.edu.cn prefer" >> /etc/ntp.conf
-/usr/sbin/ntpdate s1a.time.edu.cn
+echo "server s1a.time.edu.cn prefer" >> /etc/ntp.conf
+
+# config user group
+useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
 
 # create dir
+mkdir /opt/cm/run/cloudera-scm-agent
 mkdir -p /etc/supervisor/conf.d/
 mkdir -p /hdfs/tmp
 
