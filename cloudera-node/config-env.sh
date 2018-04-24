@@ -3,7 +3,7 @@
 # yum install
 yum -y update && yum -y upgrade
 yum -y install epel-release wget ntp openssh*
-yum -y install python-pip
+yum -y install python-pip rpcbind
 
 # get cloudera repo
 wget http://archive.cloudera.com/cdh5/redhat/7/x86_64/cdh/cloudera-cdh5.repo -O /etc/yum.repos.d/cloudera-cdh5.repo
@@ -25,6 +25,13 @@ mv /opt/cm-5.10.0 /opt/cm
 # install supervisor
 pip install --upgrade pip
 pip install supervisor
+
+# config centos
+chmod +x /etc/rc.d/rc.local
+echo "echo 0 > /proc/sys/vm/swappiness" >>/etc/rc.d/rc.local
+echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >>/etc/rc.d/rc.local
+echo 0 > /proc/sys/vm/swappiness
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
 # clean
 yum clean all
@@ -52,3 +59,4 @@ mkdir -p /hdfs/data
 # config autostart
 chkconfig ntpd on
 chkconfig sshd on
+chkconfig rpcbind on
