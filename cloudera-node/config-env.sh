@@ -19,7 +19,7 @@ mv mysql-connector-java.jar /usr/java/latest/
 
 # install cloudera
 wget -q http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.14.2_x86_64.tar.gz -O cm.tar.gz
-tar zxvf cm.tar.gz -C /opt/
+tar zxf cm.tar.gz -C /opt/
 mv /opt/cm-5.14.2 /opt/cm
 sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr\/java\/latest\/mysql-connector-java.jar"/ /opt/cm/etc/cloudera-scm-agent/config.ini
 
