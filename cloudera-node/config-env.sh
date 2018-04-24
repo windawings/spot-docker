@@ -46,6 +46,8 @@ useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --co
 mkdir /opt/cm/run/cloudera-scm-agent
 mkdir -p /etc/supervisor/conf.d/
 mkdir -p /hdfs/tmp
+mkdir -p /hdfs/nm
+mkdir -p /hdfs/data
 
 # config autostart
 chkconfig ntpd on
