@@ -3,7 +3,7 @@
 # install mysql
 yum install -q -y wget
 wget -q http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
-yum localinstall -qy mysql57-community-release-el7-11.noarch.rpm
+yum localinstall -q -y mysql57-community-release-el7-11.noarch.rpm
 yum install -q -y mysql-community-server
 
 # copy mysql connector
