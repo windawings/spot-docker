@@ -10,10 +10,9 @@ yum install -q -y mysql-community-server
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
 # config mysql
-mysqld --initialize --console -C utf8
 sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
-systemctl start mysqld
-#mysqld --daemonize --p
+#systemctl start mysqld
+mysqld --daemonize --p -C utf8
 mysql -u root
 create database scm DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
@@ -26,8 +25,8 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('cloudera');
 exit;
 /opt/cm/cm/share/cmf/schema/scm_prepare_database.sh  mysql cm -h localhost -u scm -p temp --scm-host localhost scm scm scm
 sed -i /^"skip-grant-tables/d" /etc/my.cnf
-systemctl reload mysqld
-systemctl restart mysqld
+#systemctl reload mysqld
+#systemctl restart mysqld
 
 # clean
 yum remove -q -y wget
