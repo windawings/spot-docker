@@ -20,7 +20,7 @@ mv mysql-connector-java.jar /usr/java/latest/
 # install cloudera
 wget http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.14.2_x86_64.tar.gz -O cm.tar.gz
 tar zxvf cm.tar.gz -C /opt/
-mv /opt/cm-5.10.0 /opt/cm
+mv /opt/cm-5.14.2 /opt/cm
 
 # install supervisor
 pip install --upgrade pip
@@ -55,6 +55,9 @@ mkdir -p /etc/supervisor/conf.d/
 mkdir -p /hdfs/tmp
 mkdir -p /hdfs/nm
 mkdir -p /hdfs/data
+mkdir -p /var/log/supervisor
+mkdir /var/lib/cloudera-scm-server
+chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 
 # config autostart
 chkconfig ntpd on
