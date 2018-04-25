@@ -1,4 +1,4 @@
-FROM windawings/centos7:latest
+FROM centos:7
 
 MAINTAINER windawings <windawings@foxmail.com>
 
