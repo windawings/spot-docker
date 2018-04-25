@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # config mysql
+sed -i /^"\[mysqld\]"/a\\"character-set-server=utf8" /etc/my.cnf
 sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
 systemctl restart mysqld
 mysql -u root < mysql.sql
