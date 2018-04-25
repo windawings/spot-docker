@@ -10,12 +10,13 @@ create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 create database monitor DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+flush privileges;
 grant all on *.* to 'scm'@'localhost' identified by 'temp' with grant option;
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('cloudera');
 exit;
-/opt/cm/cm/share/cmf/schema/scm_prepare_database.sh  mysql cm -h localhost -u scm -p temp --scm-host localhost scm scm scm
 sed -i /^"skip-grant-tables/d" /etc/my.cnf
 systemctl restart mysqld
+/opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
 
 # clean
-rm -f cmd.sh
+rm -f /etc/supervisor/cmd.sh

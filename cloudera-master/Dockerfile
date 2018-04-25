@@ -4,10 +4,10 @@ MAINTAINER windawings <windawings@foxmail.com>
 
 # Copy Shell
 COPY config-env.sh config-env.sh
-COPY cmd.sh cmd.sh
+COPY cmd.sh /etc/supervisor/cmd.sh
 
 # Run Shell
-RUN  chmod u+x config-env.sh cmd.sh && bash config-env.sh
+RUN  chmod u+x config-env.sh /etc/supervisor/cmd.sh && bash config-env.sh
 
 # Expose Ports
 EXPOSE 7180 7182 9000 19001
