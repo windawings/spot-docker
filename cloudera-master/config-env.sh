@@ -14,3 +14,6 @@ yum remove -q -y wget
 yum clean all
 rm -rf /var/cache/yum/*
 rm -f mysql57-community-release-el7-11.noarch.rpm
+
+# config autostart
+chkconfig mysqld on

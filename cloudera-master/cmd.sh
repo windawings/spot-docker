@@ -2,7 +2,7 @@
 
 # config mysql
 sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
-systemctl start mysqld
+systemctl restart mysqld
 mysql -u root
 create database scm DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
@@ -15,7 +15,6 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('cloudera');
 exit;
 /opt/cm/cm/share/cmf/schema/scm_prepare_database.sh  mysql cm -h localhost -u scm -p temp --scm-host localhost scm scm scm
 sed -i /^"skip-grant-tables/d" /etc/my.cnf
-systemctl reload mysqld
 systemctl restart mysqld
 
 # clean

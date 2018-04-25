@@ -64,3 +64,4 @@ chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 chkconfig ntpd on
 chkconfig sshd on
 chkconfig rpcbind on
+chkconfig supervisord on
