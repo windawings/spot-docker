@@ -4,6 +4,7 @@ MAINTAINER windawings <windawings@foxmail.com>
 
 # Copy Shell
 COPY config-env.sh config-env.sh
+COPY mysql.sql mysql.sql
 COPY cmd.sh /etc/supervisor/cmd.sh
 
 # Run Shell
