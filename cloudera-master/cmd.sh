@@ -10,5 +10,5 @@ systemctl restart mysqld
 /opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
 
 # clean
-rm -f /etc/supervisor/cmd.sh
 rm -f mysql.sql
+rm -f /etc/supervisor/cmd.sh
