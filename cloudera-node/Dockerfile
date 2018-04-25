@@ -12,6 +12,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 
 # Copy Shell
 COPY config-env.sh config-env.sh
+COPY supervisord.service /usr/lib/systemd/system/supervisord.service
 
 # Run Shell
 RUN  chmod u+x config-env.sh && bash config-env.sh
