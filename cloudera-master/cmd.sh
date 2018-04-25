@@ -11,4 +11,3 @@ systemctl restart mysqld
 
 # clean
 rm -f mysql.sql
-rm -f /etc/supervisor/cmd.sh
