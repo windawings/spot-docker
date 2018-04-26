@@ -12,10 +12,11 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 
 # Copy Shell
 COPY config-env.sh config-env.sh
+COPY start.sh /etc/supervisor/start.sh
 COPY supervisord.service /usr/lib/systemd/system/supervisord.service
 
 # Run Shell
-RUN  chmod u+x config-env.sh && bash config-env.sh
+RUN  chmod u+x config-env.sh /etc/supervisor/start.sh && bash config-env.sh
 
 # Expose Ports
 EXPOSE 7180 7182 9000 19001

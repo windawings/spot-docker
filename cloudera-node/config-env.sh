@@ -61,7 +61,7 @@ mkdir /var/lib/cloudera-scm-server
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 
 # config autostart
-chkconfig ntpd on
+/opt/cm/etc/init.d/cloudera-scm-agent start
 chkconfig sshd on
 chkconfig rpcbind on
 chkconfig supervisord on
