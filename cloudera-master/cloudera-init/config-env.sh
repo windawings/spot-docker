@@ -13,7 +13,7 @@ cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 yum remove -q -y wget
 yum clean all
 rm -rf /var/cache/yum/*
-rm -f mysql57-community-release-el7-11.noarch.rpm
+rm -f mysql57-community-release-el7-11.noarch.rpm /cloudera-init/config-env.sh
 rm -rf /etc/yum.repo.d/mysql-community*
 
 # config autostart
