@@ -10,19 +10,21 @@ ENV JAVA_HOME /usr/java/latest
 ENV CLASSPATH=.:$CLASSPTAH:$JAVA_HOME/lib
 ENV PATH=$PATH:$JAVA_HOME/bin
 
+# Create Init Dir
+RUN mkdir /cloudera-init
+
 # Copy Shell
-COPY config-env.sh config-env.sh
-COPY start.sh /etc/supervisor/start.sh
-COPY supervisord.service /usr/lib/systemd/system/supervisord.service
+COPY cloudera-init/* /cloudera-init/
 
 # Run Shell
-RUN  chmod u+x config-env.sh /etc/supervisor/start.sh && bash config-env.sh
+RUN  chmod u+x /cloudera-init/config-env.sh /cloudera-init/start.sh && bash /cloudera-init/config-env.sh
 
 # Expose Ports
 EXPOSE 7180 7182 9000 19001
 
 # Config Supervisor
 COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisord.service /usr/lib/systemd/system/supervisord.service
 
 # Init Centos
 ENTRYPOINT ["/usr/sbin/init"]

@@ -38,7 +38,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/defrag
 yum clean all
 yum -q -y remove wget
 rm -rf /var/cache/yum/*
-rm -f jdk.rpm config-env.sh cm.tar.gz
+rm -f jdk.rpm cm.tar.gz /cloudera-init/config-env.sh
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -61,7 +61,7 @@ mkdir /var/lib/cloudera-scm-server
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 
 # config autostart
-/opt/cm/etc/init.d/cloudera-scm-agent start
 chkconfig sshd on
 chkconfig rpcbind on
 chkconfig supervisord on
+/opt/cm/etc/init.d/cloudera-scm-agent start
