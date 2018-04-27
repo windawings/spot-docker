@@ -48,7 +48,7 @@ mkdir /opt/cm/run/cloudera-scm-agent
 mkdir -p /hdfs/tmp
 mkdir -p /hdfs/nm
 mkdir -p /hdfs/data
-mkdir -p /etc/supervisor
+mkdir -p /opt/cm/lib64/cmf/agent/build/env/etc/
 mkdir /var/lib/cloudera-scm-server
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 
