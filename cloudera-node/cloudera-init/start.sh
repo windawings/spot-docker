@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# check agent status
+# start agent
 /opt/cm/etc/init.d/cloudera-scm-agent start
