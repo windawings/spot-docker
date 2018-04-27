@@ -3,7 +3,7 @@ FROM centos:7
 MAINTAINER windawings <windawings@foxmail.com>
 
 # Cloudera ENV
-ENV CM_VER=5.14.3 CDH_VER=5.14.2
+ENV CM_VER=5.14.2 CDH_VER=5.14.2
 
 # Java ENV
 ENV JAVA_HOME /usr/java/latest
