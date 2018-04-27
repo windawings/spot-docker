@@ -25,12 +25,13 @@ sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr
 
 # install supervisor
 pip install -q --upgrade pip
-pip install -q supervisor
+#pip install -q supervisor
 
 # config centos
 chmod +x /etc/rc.d/rc.local
 echo "echo 0 > /proc/sys/vm/swappiness" >>/etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >>/etc/rc.d/rc.local
+echo "bash /cloudera-init/start.sh" >>/etc/rc.d/rc.local
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
@@ -63,4 +64,4 @@ chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 # config autostart
 chkconfig sshd on
 chkconfig rpcbind on
-chkconfig supervisord on
+#chkconfig supervisord on
