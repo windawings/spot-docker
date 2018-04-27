@@ -6,7 +6,7 @@ MAINTAINER windawings <windawings@foxmail.com>
 COPY cloudera-init/* /cloudera-init/
 
 # Config Supervisor
-#COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisord.conf /etc/supervisor/supervisord.conf
 
 # Run Shell
 RUN  chmod u+x /cloudera-init/config-env.sh /cloudera-init/start.sh && bash /cloudera-init/config-env.sh
