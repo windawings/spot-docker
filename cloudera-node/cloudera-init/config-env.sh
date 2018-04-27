@@ -24,7 +24,6 @@ pip install -q --upgrade pip
 chmod +x /etc/rc.d/rc.local
 echo "echo 0 > /proc/sys/vm/swappiness" >> /etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.local
-echo "bash /cloudera-init/start.sh >> /cloudera-init/start.log 2>&1" >> /etc/rc.d/rc.local
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
@@ -49,9 +48,11 @@ mkdir /opt/cm/run/cloudera-scm-agent
 mkdir -p /hdfs/tmp
 mkdir -p /hdfs/nm
 mkdir -p /hdfs/data
+mkdir -p /etc/supervisor
 mkdir /var/lib/cloudera-scm-server
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
 
 # config autostart
 chkconfig sshd on
 chkconfig rpcbind on
+chkconfig supervisord on
