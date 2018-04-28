@@ -11,16 +11,16 @@ ENV CLASSPATH=.:$CLASSPTAH:$JAVA_HOME/lib
 ENV PATH=$PATH:$JAVA_HOME/bin
 
 # Create Init Dir
-RUN mkdir /cloudera-init
+RUN mkdir -p /cloudera-init/run
 
 # Copy Shell
-COPY cloudera-init/* /cloudera-init/
+COPY cloudera-init/* /cloudera-init/run/
 
 # Copy Supervisor Service
 COPY supervisord.service /lib/systemd/system/supervisord.service
 
 # Run Shell
-RUN  chmod +x /cloudera-init/* && bash /cloudera-init/config-env.sh
+RUN  chmod +x /cloudera-init/run/* && bash /cloudera-init/run/config-env.sh
 
 # Expose Ports
 EXPOSE 7180 7182 9000 19001

@@ -31,7 +31,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/defrag
 yum clean all
 yum -q -y remove wget
 rm -rf /var/cache/yum/*
-rm -f jdk.rpm cm.tar.gz /cloudera-init/config-env.sh
+rm -f jdk.rpm cm.tar.gz /cloudera-init/run/config-env.sh
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -44,13 +44,15 @@ echo "server s1a.time.edu.cn prefer" >> /etc/ntp.conf
 useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
 
 # create dir
-mkdir /opt/cm/run/cloudera-scm-agent
-mkdir -p /hdfs/tmp
-mkdir -p /hdfs/nm
-mkdir -p /hdfs/data
+mkdir -p /hdfs/tmp/
+mkdir -p /hdfs/tmp/
+mkdir -p /hdfs/nm/
+mkdir -p /hdfs/data/
+mkdir -p /cloudera-init/log/
+mkdir -p /var/lib/cloudera-scm-server/
+mkdir /opt/cm/run/cloudera-scm-agent/
 mkdir -p /opt/cm/lib64/cmf/agent/build/env/etc/
-mkdir /var/lib/cloudera-scm-server
-chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server
+chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server/
 
 # config autostart
 chkconfig sshd on
