@@ -14,7 +14,6 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 RUN mkdir -p /cloudera-init/run
 
 # Copy Shell
-COPY cm5.14.2.tar.gz cm.tar.gz
 COPY cloudera-init/* /cloudera-init/run/
 
 # Run Shell
