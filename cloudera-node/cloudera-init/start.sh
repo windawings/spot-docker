@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # clean agent
-bash stop.sh
+bash /cloudera-init/run/stop.sh
 rm -rf /opt/cm/etc/log/cloudera-scm-agent/*
 
 # crontab
