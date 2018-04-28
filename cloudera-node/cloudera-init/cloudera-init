@@ -1,37 +1,49 @@
-#!/bin/sh  
+#!/bin/bash
 #
 # cloudera startup script for cloudera deamon
+# chkconfig: 2345 80 20  
+# description: start the cloudera deamon
 #
-#
-#chkconfig: 12345 80 20  
-#description: start the cloudera deamon
-#
+# Source function library.
+. /etc/init.d/functions
 
-# Source function library
-. /etc/rc.d/init.d/functions
+# Default variables
+RETVAL=0
+
+name="Cloudera"
+start_path="/cloudera-init/run/start.sh"
+stop_path="/cloudera-init/run/stop.sh"
+
+start() {
+  echo -n $"Starting $name..."
+  bash $start_path >> /cloudera-init/log/start.log 2>&1
+  return $RETVAL
+}
+
+stop() {
+  echo -n $"Stoping $name..."
+  bash $stop_path >> /cloudera-init/log/stop.log 2>&1
+  return $RETVAL
+}
+
+restart() {
+  stop
+  start
+}
 
 case "$1" in
-start)
-    echo "Starting Cloudera..."
-    bash /cloudera-init/run/start.sh >> /cloudera-init/log/start.log 2>&1
+  start)
+    start
     ;;
-
-stop)
-    echo "Stopping Cloudera..."
-    bash /cloudera-init/run/stop.sh >> /cloudera-init/log/stop.log 2>&1
+  stop)
+    stop
     ;;
-
-restart)
-    echo "Stopping Cloudera..."
-    bash /cloudera-init/run/stop.sh >> /cloudera-init/log/stop.log 2>&1
-    sleep 2
-    echo
-    echo "Starting Cloudera..."
-    bash /cloudera-init/run/start.sh >> /cloudera-init/log/start.log 2>&1
+  restart)
+    restart
     ;;
-
-*)
-    echo "Usage: $prog {start|stop|restart}"
-    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    RETVAL=1
 esac
-exit 0
+
+exit $RETVAL
