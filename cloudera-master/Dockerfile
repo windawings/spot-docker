@@ -11,8 +11,5 @@ RUN  chmod +x cloudera-init/run/* && bash /cloudera-init/run/config-env.sh
 # Expose Ports
 EXPOSE 7180 7182 9000 19001
 
-# Config Supervisor
-COPY supervisord.conf /opt/cm/lib64/cmf/agent/build/env/etc/supervisord.conf
-
 # Init Centos
 ENTRYPOINT ["/usr/sbin/init"]

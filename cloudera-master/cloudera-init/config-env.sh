@@ -9,13 +9,17 @@ yum install -q -y mysql-community-server
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
+# config centos
+chmod 755 /cloudera-init/run/cloudera-init
+mv /cloudera-init/run/cloudera-init /etc/init.d/
+chkconfig cloudera-init on
+
 # clean
 yum remove -q -y wget
 yum clean all
 rm -rf /var/cache/yum/*
 rm -rf /etc/yum.repo.d/mysql-community*
 rm -f mysql57-community-release-el7-11.noarch.rpm /cloudera-init/run/config-env.sh
-
 
 # config autostart
 chkconfig ntpd on

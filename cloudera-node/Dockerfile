@@ -14,19 +14,14 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 RUN mkdir -p /cloudera-init/run
 
 # Copy Shell
+COPY cm5.14.2.tar.gz cm.tar.gz
 COPY cloudera-init/* /cloudera-init/run/
-
-# Copy Supervisor Service
-COPY supervisord.service /lib/systemd/system/supervisord.service
 
 # Run Shell
 RUN  chmod +x /cloudera-init/run/* && bash /cloudera-init/run/config-env.sh
 
 # Expose Ports
 EXPOSE 7180 7182 9000 19001
-
-# Config Supervisor
-COPY supervisord.conf /opt/cm/lib64/cmf/agent/build/env/etc/supervisord.conf
 
 # Init Centos
 ENTRYPOINT ["/usr/sbin/init"]
