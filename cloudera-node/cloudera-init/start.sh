@@ -12,3 +12,5 @@ rm -rf /opt/cm/etc/log/cloudera-scm-agent/*
 
 # restart agent
 /opt/cm/etc/init.d/cloudera-scm-agent start
+
+exit 0

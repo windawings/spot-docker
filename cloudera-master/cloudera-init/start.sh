@@ -9,3 +9,5 @@ sed -i /^"skip-grant-tables/d" /etc/my.cnf
 systemctl restart mysqld
 /opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
 /opt/cm/etc/init.d/cloudera-scm-server start
+
+exit 0

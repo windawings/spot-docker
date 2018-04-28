@@ -9,11 +9,6 @@ yum install -q -y mysql-community-server
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
-# config centos
-chmod 755 /cloudera-init/run/cloudera-init
-mv /cloudera-init/run/cloudera-init /etc/init.d/
-chkconfig cloudera-init on
-
 # clean
 yum remove -q -y wget
 yum clean all

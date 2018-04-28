@@ -1,11 +1,37 @@
 #!/bin/sh  
-  
-#add for chkconfig  
-#chkconfig: 2345 70 30  
-#description: Cloudera Init
-#processname: clouderaInit
+#
+# cloudera startup script for cloudera deamon
+#
+#
+#chkconfig: 12345 80 20  
+#description: start the cloudera deamon
+#
+
 # Source function library
 . /etc/rc.d/init.d/functions
 
-# init cloudera
-bash /cloudera-init/run/start.sh >> /cloudera-init/log/init.log 2>&1;
+case "$1" in
+start)
+    echo "Starting Cloudera..."
+    bash /cloudera-init/run/start.sh >> /cloudera-init/log/start.log 2>&1
+    ;;
+
+stop)
+    echo "Stopping Cloudera..."
+    bash /cloudera-init/run/stop.sh >> /cloudera-init/log/stop.log 2>&1
+    ;;
+
+restart)
+    echo "Stopping Cloudera..."
+    bash /cloudera-init/run/stop.sh >> /cloudera-init/log/stop.log 2>&1
+    sleep 2
+    echo
+    echo "Starting Cloudera..."
+    bash /cloudera-init/run/start.sh >> /cloudera-init/log/start.log 2>&1
+    ;;
+
+*)
+    echo "Usage: $prog {start|stop|restart}"
+    ;;
+esac
+exit 0
