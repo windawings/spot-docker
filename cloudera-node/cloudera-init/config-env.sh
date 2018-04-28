@@ -27,15 +27,8 @@ echo "echo 0 > /proc/sys/vm/swappiness" >> /etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.local
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
-cp /cloudera-init/run/functions /etc/init.d/
-mv /cloudera-init/run/functions /etc/rc.d/init.d/
+mv /cloudera-init/run/functions /etc/init.d/
 mv /cloudera-init/run/cloudera-init /etc/init.d/
-
-# clean
-yum clean all
-yum -q -y remove wget
-rm -rf /var/cache/yum/*
-rm -f jdk.rpm cm.tar.gz /cloudera-init/run/config-env.sh
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -49,13 +42,12 @@ useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --co
 
 # create dir
 mkdir -p /hdfs/tmp/
-mkdir -p /hdfs/tmp/
 mkdir -p /hdfs/nm/
 mkdir -p /hdfs/data/
 mkdir -p /cloudera-init/log/
 mkdir -p /var/lib/cloudera-scm-server/
 mkdir /opt/cm/run/cloudera-scm-agent/
-mkdir -p /opt/cm/lib64/cmf/agent/build/env/etc/
+mkdir -p /run/secrets/kubernetes.io/serviceaccount
 chmod 751 /opt/cm/run/cloudera-scm-agent/
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server/
 
@@ -63,3 +55,9 @@ chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server/
 chkconfig sshd on
 chkconfig rpcbind on
 chkconfig cloudera-init on
+
+# clean
+yum clean all
+yum -q -y remove wget
+rm -rf /var/cache/yum/*
+rm -f jdk.rpm cm.tar.gz /cloudera-init/run/config-env.sh
