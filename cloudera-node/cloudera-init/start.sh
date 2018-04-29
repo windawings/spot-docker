@@ -7,6 +7,9 @@ crontab /opt/cm/etc/cloudera-scm-agent/cron.tab
 /opt/cm/etc/init.d/cloudera-scm-agent start
 
 # clean agent
+echo 0 > /proc/sys/vm/swappiness
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
 bash /cloudera-init/run/stop.sh
 rm -rf /opt/cm/etc/log/cloudera-scm-agent/*
 

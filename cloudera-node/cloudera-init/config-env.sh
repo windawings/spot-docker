@@ -25,8 +25,10 @@ chmod 755 /cloudera-init/run/cloudera-init
 chmod +x /etc/rc.d/rc.local
 echo "echo 0 > /proc/sys/vm/swappiness" >> /etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.local
+echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.d/rc.local
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
 mv /cloudera-init/run/functions /etc/init.d/
 mv /cloudera-init/run/cloudera-init /etc/init.d/
 
