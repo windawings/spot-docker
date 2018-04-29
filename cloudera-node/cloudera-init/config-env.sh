@@ -46,6 +46,8 @@ mkdir -p /hdfs/nm/
 mkdir -p /hdfs/data/
 mkdir -p /cloudera-init/log/
 mkdir -p /var/lib/cloudera-scm-server/
+mkdir -p /run/secrets/kubernetes.io/serviceaccount/
+mkdir -p /var/run/secrets/kubernetes.io/serviceaccount/
 mkdir /opt/cm/run/cloudera-scm-agent/
 chmod 751 /opt/cm/run/cloudera-scm-agent/
 chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server/
