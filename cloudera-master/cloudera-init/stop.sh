@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # stop server
-/opt/cm/etc/init.d/cloudera-scm-server stop
+systemctl stop cloudera-scm-server
 
 exit 0
