@@ -19,6 +19,6 @@ if [ ! -d "/var/run/secrets/kubernetes.io/serviceaccount" ]; then
 fi
 
 # start server
-/opt/cm/etc/init.d/cloudera-scm-server start
-
+systemctl start cloudera-scm-server
+chkconfig cloudera-scm-server on
 exit 0

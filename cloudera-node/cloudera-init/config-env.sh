@@ -16,6 +16,8 @@ wget -q http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.14.2_x
 tar zxf cm.tar.gz -C /opt/
 mv /opt/cm-5.14.2 /opt/cm
 sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr\/java\/latest\/mysql-connector-java.jar"/ /opt/cm/etc/cloudera-scm-agent/config.ini
+cp /opt/cm/etc/init.d/cloudera-scm-agent /etc/init.d/cloudera-scm-agent
+cp /opt/cm/etc/init.d/cloudera-scm-server /etc/init.d/cloudera-scm-server
 
 # install supervisor
 pip install -q --upgrade pip
@@ -34,7 +36,13 @@ mv /cloudera-init/run/cloudera-init /etc/init.d/
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+sed -i s/^"#PermitRootLogin yes"/"PermitRootLogin yes"/ /etc/ssh/sshd_config
+sed -i /^"PermitRootLogin yes"/a\\"RSAAuthentication yes" /etc/ssh/sshd_config
+sed -i s/^"PasswordAuthentication yes"/"PasswordAuthentication no"/ /etc/ssh/sshd_config
+sed -i s/^"#PubkeyAuthentication yes"/"PubkeyAuthentication yes"/ /etc/ssh/sshd_config
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
 
 # config ntp
 echo "server s1a.time.edu.cn prefer" >> /etc/ntp.conf
@@ -47,17 +55,21 @@ mkdir -p /hdfs/tmp/
 mkdir -p /hdfs/nm/
 mkdir -p /hdfs/data/
 mkdir -p /cloudera-init/log/
+mkdir -p /opt/cloudera/parcels/
 mkdir -p /var/lib/cloudera-scm-server/
+mkdir -p /opt/cm/run/cloudera-scm-agent/
 mkdir -p /run/secrets/kubernetes.io/serviceaccount/
 mkdir -p /var/run/secrets/kubernetes.io/serviceaccount/
-mkdir /opt/cm/run/cloudera-scm-agent/
+
+# config dir
 chmod 751 /opt/cm/run/cloudera-scm-agent/
-chown cloudera-scm:cloudera-scm /var/lib/cloudera-scm-server/
+chown cloudera-scm:cloudera-scm /opt/cloudera/parcels/ /var/lib/cloudera-scm-server/
 
 # config autostart
 chkconfig sshd on
 chkconfig rpcbind on
 chkconfig cloudera-init on
+chkconfig cloudera-scm-agent on
 
 # clean
 yum clean all
