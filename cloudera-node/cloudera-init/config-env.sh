@@ -49,10 +49,8 @@ echo "server s1a.time.edu.cn prefer" >> /etc/ntp.conf
 useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
 
 # create dir
-mkdir -p /hdfs/tmp/
-mkdir -p /hdfs/nm/
-mkdir -p /hdfs/data/
 mkdir -p /cloudera-init/log/
+mkdir -p /var/lib/alternatives/
 mkdir -p /opt/cloudera/parcels/
 mkdir -p /var/lib/cloudera-scm-server/
 mkdir -p /opt/cm/run/cloudera-scm-agent/

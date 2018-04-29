@@ -9,6 +9,13 @@ sed -i /^"skip-grant-tables/d" /etc/my.cnf
 systemctl restart mysqld
 /opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
 
+# config hostname
+echo $HOSTNAME > /etc/hostname
+if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
+  echo -e "${POD_IP} ${HOSTNAME}" >> /etc/hosts
+  reboot
+fi
+
 # check dir for k8s sa
 if [ ! -d "/run/secrets/kubernetes.io/serviceaccount" ]; then
   mkdir -p /run/secrets/kubernetes.io/serviceaccount
