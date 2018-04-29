@@ -12,7 +12,6 @@ cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 # config autostart
 chkconfig ntpd on
 chkconfig mysqld on
-chkconfig cloudera-scm-agent off
 
 # clean
 yum remove -q -y wget

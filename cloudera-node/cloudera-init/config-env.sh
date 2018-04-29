@@ -16,8 +16,6 @@ wget -q http://archive.cloudera.com/cm5/cm/5/cloudera-manager-centos7-cm5.14.2_x
 tar zxf cm.tar.gz -C /opt/
 mv /opt/cm-5.14.2 /opt/cm
 sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr\/java\/latest\/mysql-connector-java.jar"/ /opt/cm/etc/cloudera-scm-agent/config.ini
-cp /opt/cm/etc/init.d/cloudera-scm-agent /etc/init.d/cloudera-scm-agent
-cp /opt/cm/etc/init.d/cloudera-scm-server /etc/init.d/cloudera-scm-server
 
 # install supervisor
 pip install -q --upgrade pip
@@ -69,7 +67,6 @@ chown cloudera-scm:cloudera-scm /opt/cloudera/parcels/ /var/lib/cloudera-scm-ser
 chkconfig sshd on
 chkconfig rpcbind on
 chkconfig cloudera-init on
-chkconfig cloudera-scm-agent on
 
 # clean
 yum clean all

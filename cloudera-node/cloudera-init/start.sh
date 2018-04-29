@@ -22,6 +22,6 @@ if [ ! -d "/var/run/secrets/kubernetes.io/serviceaccount" ]; then
 fi
 
 # start agent
-systemctl start cloudera-scm-agent
+/opt/cm/etc/init.d/cloudera-scm-agent start
 
 exit 0
