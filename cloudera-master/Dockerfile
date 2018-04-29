@@ -1,4 +1,4 @@
-FROM windawings/cloudera-node:latest
+FROM windawings/cloudera-node:5.14.2
 
 MAINTAINER windawings <windawings@foxmail.com>
 
