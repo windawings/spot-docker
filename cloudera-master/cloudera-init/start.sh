@@ -2,6 +2,12 @@
 
 # config hostname
 echo "[+] $(date) config k8s hostname"
+
+while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
+  echo "[-] $(date) hostname or hosts not found"
+  sleep 2s
+done
+
 echo $HOSTNAME > /etc/hostname
 if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
   echo "${POD_IP} ${HOSTNAME}" >> /etc/hosts
