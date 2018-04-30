@@ -10,17 +10,18 @@ done
 
 hostname $HOSTNAME
 echo $HOSTNAME > /etc/hostname
+hostnamectl set-hostname $HOSTNAME
 
 if [ ! -e /etc/sysconfig/network ]; then
   touch /etc/sysconfig/network
 fi
 
 if [ $(grep -c $HOSTNAME /etc/sysconfig/network) -eq 0 ]; then
-  echo $HOSTNAME >> /etc/sysconfig/network
+  echo -e "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
 fi
 
 if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
-  echo "${POD_IP} ${HOSTNAME}" >> /etc/hosts
+  sed -i "s/^$POD_IP.*$POD_NAME$/& $HOSTNAME/g" /etc/hosts
   echo "[+] $(date) reboot"
   shutdown -r now
 fi
