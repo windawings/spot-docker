@@ -16,19 +16,21 @@ stop_path="/cloudera-init/run/stop.sh"
 
 start() {
   echo -n $"Starting $name..."
-  bash $start_path >> /cloudera-init/log/start.log 2>&1
+  nohup bash $start_path >> /cloudera-init/log/start.log 2>&1 &
   return $RETVAL
 }
 
 stop() {
   echo -n $"Stoping $name..."
-  bash $stop_path >> /cloudera-init/log/stop.log 2>&1
+  nohup bash $stop_path >> /cloudera-init/log/stop.log 2>&1 &
   return $RETVAL
 }
 
 restart() {
-  stop
-  start
+  echo -n $"Restarting $name..."
+  bash $start_path >> /cloudera-init/log/restart.log 2>&1
+  bash $stop_path >> /cloudera-init/log/restart.log 2>&1
+  return $RETVAL
 }
 
 case "$1" in

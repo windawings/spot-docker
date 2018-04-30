@@ -2,12 +2,20 @@
 
 # config hostname
 echo "[+] $(date) config k8s hostname"
-
+echo "[+] $(date) check k8s hostname file"
 while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
   echo "[-] $(date) hostname or hosts not found"
   sleep 2s
 done
 
+# update may be overrided
+sleep 10s
+while [ $(grep -c $POD_NAME /etc/hosts) -eq 0 ]; do
+  echo "[-] $(date) hostname or hosts not be overrided"
+  sleep 2s
+done
+
+# try anything i can to update hostname, even though i open the port 4434 in service
 hostname $HOSTNAME
 echo $HOSTNAME > /etc/hostname
 hostnamectl set-hostname $HOSTNAME
@@ -25,6 +33,13 @@ if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
   echo "[+] $(date) reboot"
   shutdown -r now
 fi
+
+# check mysqld
+echo "[+] $(date) check cloudera mysql"
+while [ ! ps -ef | grep mysqld | egrep -v grep >/dev/null ]; do
+  echo "[-] $(date) mysqld is not running"
+  sleep 2s
+done
 
 # config mysql
 echo "[+] $(date) config cloudera mysql"
