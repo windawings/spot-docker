@@ -3,13 +3,12 @@
 # check environment
 if [ -z "$POD_NAME" ]; then
   echo "[-] $(date) invalid environment"
-  sleep 10s
-  systemctl restart cloudera-init
-  exit 0
+  exit 1
 fi
 
 # config hostname
 echo "[+] $(date) config k8s hostname"
+
 echo "[+] $(date) check k8s hostname file"
 while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
   echo "[-] $(date) hostname or hosts not found"
@@ -17,9 +16,11 @@ while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
 done
 
 # try anything i can to update hostname, even though i open the port 4434 in service
-hostname $HOSTNAME
-echo $HOSTNAME > /etc/hostname
-hostnamectl set-hostname $HOSTNAME
+if [ $(grep -c $HOSTNAME /etc/hostname) -eq 0 ]; then
+  hostname $HOSTNAME
+  echo $HOSTNAME > /etc/hostname
+  hostnamectl set-hostname $HOSTNAME
+fi
 
 if [ ! -e /etc/sysconfig/network ]; then
   touch /etc/sysconfig/network
@@ -43,14 +44,16 @@ while [ ! ps -ef | grep mysqld | egrep -v grep >/dev/null ]; do
 done
 
 # config mysql
-echo "[+] $(date) config cloudera mysql"
-sed -i /^"\[mysqld\]"/a\\"character-set-server=utf8" /etc/my.cnf
-sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
-systemctl restart mysqld
-mysql -u root < /cloudera-init/run/mysql.sql
-sed -i /^"skip-grant-tables/d" /etc/my.cnf
-systemctl restart mysqld
-/opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
+if [ $(grep -c "character-set-server=utf8" /etc/my.cnf) -eq 0 ]; then
+  echo "[+] $(date) config cloudera mysql"
+  sed -i /^"\[mysqld\]"/a\\"character-set-server=utf8" /etc/my.cnf
+  sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
+  systemctl restart mysqld
+  mysql -u root < /cloudera-init/run/mysql.sql
+  sed -i /^"skip-grant-tables/d" /etc/my.cnf
+  systemctl restart mysqld
+  /opt/cm/share/cmf/schema/scm_prepare_database.sh mysql scm scm temp
+fi
 
 # check dir for k8s sa
 echo "[+] $(date) fix k8s serviceaccount mount error"
@@ -65,4 +68,8 @@ fi
 # start server
 echo "[+] $(date) start cloudera server"
 /opt/cm/etc/init.d/cloudera-scm-server start
+
+# stop supervisor to avoid conflict with cloudera
+systemctl stop supervisord
+
 exit 0

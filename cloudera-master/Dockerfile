@@ -8,6 +8,9 @@ COPY cloudera-init/* /cloudera-init/run/
 # Run Shell
 RUN  chmod +x cloudera-init/run/* && bash /cloudera-init/run/config-env.sh
 
+# Config Supervisor
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+
 # Expose Ports
 EXPOSE 7180 7182 7191 19001
 
