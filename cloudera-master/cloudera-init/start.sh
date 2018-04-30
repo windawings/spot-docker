@@ -1,17 +1,18 @@
 #!/bin/bash
 
+# check environment
+if [ -z "$POD_NAME" ]; then
+  echo "[-] $(date) invalid environment"
+  sleep 10s
+  systemctl restart cloudera-init
+  exit 0
+fi
+
 # config hostname
 echo "[+] $(date) config k8s hostname"
 echo "[+] $(date) check k8s hostname file"
 while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
   echo "[-] $(date) hostname or hosts not found"
-  sleep 2s
-done
-
-# update may be overrided
-sleep 10s
-while [ $(grep -c $POD_NAME /etc/hosts) -eq 0 ]; do
-  echo "[-] $(date) hostname or hosts not be overrided"
   sleep 2s
 done
 
