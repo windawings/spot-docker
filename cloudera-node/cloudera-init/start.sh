@@ -9,6 +9,7 @@ echo "[+] $(date) init cloudera requirements"
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
+mkdir -p /var/lib/alternatives/
 
 # stop agent
 echo "[+] $(date) clean cloudera agent history"
