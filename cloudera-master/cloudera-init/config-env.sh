@@ -6,9 +6,6 @@ wget -q http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 yum localinstall -q -y mysql57-community-release-el7-11.noarch.rpm
 yum install -q -y mysql-community-server
 
-# install supervisord
-pip install -q supervisor
-
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 

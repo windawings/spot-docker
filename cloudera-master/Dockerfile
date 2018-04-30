@@ -5,10 +5,13 @@ MAINTAINER windawings <windawings@foxmail.com>
 # Copy Shell
 COPY cloudera-init/* /cloudera-init/run/
 
+# Config Supervisor
+COPY supervisord.service /usr/lib/systemd/system/supervisord.service
+
 # Run Shell
 RUN  chmod +x cloudera-init/run/* && bash /cloudera-init/run/config-env.sh
 
-# Config Supervisor
+# Setup Supervisor
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 
 # Expose Ports
