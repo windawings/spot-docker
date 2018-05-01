@@ -70,6 +70,7 @@ echo "[+] $(date) start cloudera server"
 /opt/cm/etc/init.d/cloudera-scm-server start
 
 # stop supervisor to avoid conflict with cloudera
+echo "[+] $(date) stop supervisor"
 systemctl stop supervisord
 
 exit 0
