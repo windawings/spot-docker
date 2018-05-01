@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # check environment
-if [ -z "$POD_NAME" ]; then
+if [ ! -n "$POD_NAME" ]; then
   echo "[-] $(date) invalid environment"
   exit 1
 fi
