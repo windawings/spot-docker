@@ -16,13 +16,13 @@ stop_path="/cloudera-init/run/stop.sh"
 
 start() {
   echo -n $"Starting $name..."
-  nohup bash $start_path >> /cloudera-init/log/start.log 2>&1 &
+  bash $start_path >> /cloudera-init/log/start.log 2>&1
   return $RETVAL
 }
 
 stop() {
   echo -n $"Stoping $name..."
-  nohup bash $stop_path >> /cloudera-init/log/stop.log 2>&1 &
+  bash $stop_path >> /cloudera-init/log/stop.log 2>&1
   return $RETVAL
 }
 
