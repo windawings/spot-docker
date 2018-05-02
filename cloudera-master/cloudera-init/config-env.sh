@@ -11,7 +11,7 @@ cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
 # config autostart
 chkconfig ntpd on
-chkconfig mysqld off
+chkconfig mysqld on
 
 # clean
 yum remove -q -y wget
