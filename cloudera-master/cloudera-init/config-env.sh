@@ -9,6 +9,13 @@ yum install -q -y mysql-community-server
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
+# config mysql
+sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
+/usr/bin/mysqld_pre_systemd
+/usr/sbin/mysqld --daemonize --pid-file=/var/run/mysqld/mysqld.pid
+mysql -u root < /cloudera-init/run/mysql.sql
+sed -i /^"skip-grant-tables/d" /etc/my.cnf
+
 # config autostart
 chkconfig ntpd on
 chkconfig mysqld on
