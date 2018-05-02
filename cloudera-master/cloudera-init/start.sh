@@ -42,6 +42,7 @@ done
 
 # config mysql
 if [ $(grep -c "character-set-server=utf8" /etc/my.cnf) -eq 0 ]; then
+  sleep 10s # avoid mysqld service restart too fast
   echo "[+] $(date) config cloudera mysql"
   sed -i /^"\[mysqld\]"/a\\"character-set-server=utf8" /etc/my.cnf
   sed -i /^"\[mysqld\]"/a\\"skip-grant-tables" /etc/my.cnf
