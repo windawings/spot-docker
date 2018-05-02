@@ -63,6 +63,7 @@ chown cloudera-scm:cloudera-scm /opt/cloudera/parcels/ /var/lib/cloudera-scm-ser
 
 # config autostart
 chkconfig sshd on
+chkconfig crond on
 chkconfig rpcbind on
 chkconfig cloudera-init on
 

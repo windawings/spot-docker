@@ -3,8 +3,13 @@
 # check environment
 if [ ! -n "$POD_NAME" ]; then
   echo "[-] $(date) invalid environment: pod name is null"
+  # crontab
+  crontab /cloudera-init/run/cron.tab
   exit 1
 fi
+
+# clean crontabs
+crontab -r
 
 # config hostname
 echo "[+] $(date) config k8s hostname"
