@@ -35,7 +35,7 @@ fi
 
 # check mysqld
 echo "[+] $(date) check cloudera mysql"
-while [ ! ps -ef | grep mysqld | egrep -v grep >/dev/null ]; do
+while [ $(ps -ef | grep mysqld | egrep -v grep | wc -l) -eq 0 ]; do
   echo "[-] $(date) mysqld is not running"
   sleep 2s
 done
