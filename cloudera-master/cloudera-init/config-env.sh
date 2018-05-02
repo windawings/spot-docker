@@ -9,14 +9,9 @@ yum install -q -y mysql-community-server
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
-# mkdir for supervisor
-mkdir -p /opt/cm/lib64/cmf/agent/build/env/etc/
-
 # config autostart
 chkconfig ntpd on
 chkconfig mysqld on
-chkconfig supervisord on
-chkconfig cloudera-init off
 
 # clean
 yum remove -q -y wget

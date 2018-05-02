@@ -2,7 +2,7 @@
 
 # check environment
 if [ ! -n "$POD_NAME" ]; then
-  echo "[-] $(date) invalid environment"
+  echo "[-] $(date) invalid environment: pod name is null"
   exit 1
 fi
 
@@ -33,7 +33,7 @@ fi
 if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
   sed -i "s/^$POD_IP.*$POD_NAME$/& $HOSTNAME/g" /etc/hosts
   echo "[+] $(date) reboot"
-  shutdown -r now
+  #shutdown -r now
 fi
 
 # check mysqld
@@ -68,9 +68,5 @@ fi
 # start server
 echo "[+] $(date) start cloudera server"
 /opt/cm/etc/init.d/cloudera-scm-server start
-
-# stop supervisor to avoid conflict with cloudera
-echo "[+] $(date) stop supervisor"
-systemctl stop supervisord
 
 exit 0
