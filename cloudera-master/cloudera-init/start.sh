@@ -1,38 +1,5 @@
 #!/bin/bash
 
-# check environment
-if [ -n "$POD_NAME" ]; then
-  # config hostname
-  echo "[+] $(date) config k8s hostname"
-
-  echo "[+] $(date) check k8s hostname file"
-  while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
-    echo "[-] $(date) hostname or hosts not found"
-    sleep 2s
-  done
-
-  # try anything i can to update hostname, even though i open the port 4434 in service
-  if [ $(grep -c $HOSTNAME /etc/hostname) -eq 0 ]; then
-    hostname $HOSTNAME
-    echo $HOSTNAME > /etc/hostname
-    hostnamectl set-hostname $HOSTNAME
-  fi
-
-  if [ ! -e /etc/sysconfig/network ]; then
-    touch /etc/sysconfig/network
-  fi
-
-  if [ $(grep -c $HOSTNAME /etc/sysconfig/network) -eq 0 ]; then
-    echo -e "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
-  fi
-
-  if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
-    sed -i "s/^$POD_IP.*$POD_NAME$/& $HOSTNAME/g" /etc/hosts
-  fi
-else
-  echo "[-] $(date) invalid environment: pod name is null"
-fi
-
 # check mysqld
 echo "[+] $(date) check cloudera mysql"
 while [ $(ps -ef | grep mysqld | egrep -v grep | wc -l) -eq 0 ]; do
@@ -63,8 +30,41 @@ if [ ! -d "/var/run/secrets/kubernetes.io/serviceaccount" ]; then
   mkdir -p /var/run/secrets/kubernetes.io/serviceaccount
 fi
 
-# start server
-echo "[+] $(date) start cloudera server"
-/opt/cm/etc/init.d/cloudera-scm-server start
+# check environment
+if [ -n "$POD_NAME" ]; then
+  # config hostname
+  echo "[+] $(date) config k8s hostname"
+
+  echo "[+] $(date) check k8s hostname file"
+  while [ ! -e /etc/hostname -o ! -e /etc/hosts ]; do
+    echo "[-] $(date) hostname or hosts not found"
+    sleep 2s
+  done
+
+  # try anything i can to update hostname, even though i open the port 4434 in service
+  if [ $(grep -c $HOSTNAME /etc/hostname) -eq 0 ]; then
+    hostname $HOSTNAME
+    echo $HOSTNAME > /etc/hostname
+    hostnamectl set-hostname $HOSTNAME
+  fi
+
+  if [ ! -e /etc/sysconfig/network ]; then
+    touch /etc/sysconfig/network
+  fi
+
+  if [ $(grep -c $HOSTNAME /etc/sysconfig/network) -eq 0 ]; then
+    echo -e "HOSTNAME=${HOSTNAME}" >> /etc/sysconfig/network
+  fi
+
+  if [ $(grep -c $HOSTNAME /etc/hosts) -eq 0 ]; then
+    sed -i "s/^$POD_IP.*$POD_NAME$/& $HOSTNAME/g" /etc/hosts
+  fi
+  
+  # start server
+  echo "[+] $(date) start cloudera server"
+  /opt/cm/etc/init.d/cloudera-scm-server start
+else
+  echo "[-] $(date) invalid environment: pod name is null"
+fi
 
 exit 0
