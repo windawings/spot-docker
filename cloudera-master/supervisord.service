@@ -1,0 +1,10 @@
+[Service]
+ExecStart=/opt/cm/lib64/cmf/agent/build/env/bin/supervisord -n
+ExecStop=/opt/cm/lib64/cmf/agent/build/env/bin/supervisorctl shutdown
+ExecReload=/opt/cm/lib64/cmf/agent/build/env/bin/supervisorctl reload
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target

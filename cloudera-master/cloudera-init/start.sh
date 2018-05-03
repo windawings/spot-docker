@@ -4,7 +4,6 @@
 echo "[+] $(date) check cloudera mysql"
 while [ $(ps -ef | grep mysqld | egrep -v grep | wc -l) -eq 0 ]; do
   echo "[-] $(date) mysqld is not running"
-  systemctl start mysqld
   sleep 2s
 done
 
@@ -64,8 +63,13 @@ if [ -n "$POD_NAME" ]; then
   # start server
   echo "[+] $(date) start cloudera server"
   /opt/cm/etc/init.d/cloudera-scm-server start
+  
+  # stop supervisor to avoid conflict with cloudera
+  echo "[+] $(date) stop supervisor"
+  systemctl stop supervisord
 else
   echo "[-] $(date) invalid environment: pod name is null"
+  exit 1
 fi
 
 exit 0
