@@ -9,13 +9,9 @@ yum install -q -y mysql-community-server
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
 
-# mkdir
-mkdir -p /opt/cm/lib64/cmf/agent/build/env/etc/
-
 # config autostart
 chkconfig ntpd on
 chkconfig mysqld on
-chkconfig supervisord on
 
 # clean
 yum remove -q -y wget
