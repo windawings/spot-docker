@@ -63,10 +63,6 @@ if [ -n "$POD_NAME" ]; then
   # start server
   echo "[+] $(date) start cloudera server"
   /opt/cm/etc/init.d/cloudera-scm-server start
-  
-  # stop supervisor to avoid conflict with cloudera
-  echo "[+] $(date) stop supervisor"
-  systemctl stop supervisord
 else
   echo "[-] $(date) invalid environment: pod name is null"
   exit 1
