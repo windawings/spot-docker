@@ -3,7 +3,11 @@
 # yum install
 yum -q -y update && yum -q -y upgrade
 yum -q -y install epel-release wget ntp openssh*
-yum -q -y install python-pip python-devel rpcbind crontabs which psmisc MySQL-python at bc bind-libs bind-utils cups-client cups-libs cyrus-sasl-gssapi cyrus-sasl-plain ed fuse fuse-libs httpd httpd-tools keyutils-libs-devel krb5-devel libcom_err-devel libselinux-devel libsepol-devel libverto-devel mailcap noarch mailx mod_ssl openssl-devel pcre-devel postgresql-libs python-psycopg2 redhat-lsb-core redhat-lsb-submod-security x86_64 spax time zlib-devel
+yum -q -y install python-pip python-devel rpcbind crontabs which psmisc MySQL-python at bc bind-libs bind-utils cups-client cups-libs cyrus-sasl-gssapi cyrus-sasl-plain ed fuse fuse-libs httpd httpd-tools keyutils-libs-devel krb5-devel libcom_err-devel libselinux-devel libsepol-devel libverto-devel mailcap noarch mailx mod_ssl openssl-devel pcre-devel postgresql-libs python-psycopg2 redhat-lsb-core redhat-lsb-submod-security x86_64 spax time zlib-devel bsdtar
+
+# set bsdtar instead of tar
+cp $(which tar) $(which tar)~
+ln -sf $(which bsdtar) $(which tar)
 
 # install jdk
 wget -q --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.rpm -O jdk.rpm
@@ -51,7 +55,7 @@ useradd --system --home=/opt/cm/run/cloudera-scm-server  --shell=/bin/false --co
 # create dir
 mkdir -p /cloudera-init/log/
 mkdir -p /var/lib/alternatives/
-mkdir -p /opt/cloudera/parcels/
+mkdir -p /opt/cloudera/parcels/.flood
 mkdir -p /var/lib/cloudera-scm-server/
 mkdir -p /opt/cm/run/cloudera-scm-agent/
 mkdir -p /run/secrets/kubernetes.io/serviceaccount/
@@ -59,7 +63,8 @@ mkdir -p /var/run/secrets/kubernetes.io/serviceaccount/
 
 # config dir
 chmod 751 /opt/cm/run/cloudera-scm-agent/
-chown cloudera-scm:cloudera-scm /opt/cloudera/parcels/ /var/lib/cloudera-scm-server/
+chmod 755 /opt/cloudera/parcels/.flood/
+chown cloudera-scm:cloudera-scm /opt/cloudera/parcels/.flood/ /var/lib/cloudera-scm-server/
 
 # config autostart
 chkconfig sshd on
