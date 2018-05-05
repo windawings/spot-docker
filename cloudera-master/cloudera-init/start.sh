@@ -34,4 +34,8 @@ fi
 echo "[+] $(date) start cloudera server"
 /opt/cm/etc/init.d/cloudera-scm-server start
 
+# start agent
+echo "[+] $(date) start cloudera agent"
+/opt/cm/etc/init.d/cloudera-scm-agent start
+
 exit 0
