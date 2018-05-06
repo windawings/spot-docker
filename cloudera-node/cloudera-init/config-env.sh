@@ -25,16 +25,16 @@ sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr
 pip install -q --upgrade pip
 
 # config centos
+mv /cloudera-init/run/functions /etc/init.d/
+mv /cloudera-init/run/cloudera-init /etc/init.d/
 chmod 755 /cloudera-init/run/cloudera-init
+echo 0 > /proc/sys/vm/swappiness
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
 chmod +x /etc/rc.d/rc.local
 echo "echo 0 > /proc/sys/vm/swappiness" >> /etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.local
 echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.d/rc.local
-echo 0 > /proc/sys/vm/swappiness
-echo never > /sys/kernel/mm/transparent_hugepage/defrag
-echo never > /sys/kernel/mm/transparent_hugepage/enabled
-mv /cloudera-init/run/functions /etc/init.d/
-mv /cloudera-init/run/cloudera-init /etc/init.d/
 
 # ssh login without authetication
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
