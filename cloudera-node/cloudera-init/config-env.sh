@@ -25,9 +25,9 @@ sed -i s/^.*"cloudera_mysql_connector_jar".*/"cloudera_mysql_connector_jar=\/usr
 pip install -q --upgrade pip
 
 # config centos
+chmod 755 /cloudera-init/run/cloudera-init
 mv /cloudera-init/run/functions /etc/init.d/
 mv /cloudera-init/run/cloudera-init /etc/init.d/
-chmod 755 /cloudera-init/run/cloudera-init
 echo 0 > /proc/sys/vm/swappiness
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
@@ -37,7 +37,7 @@ echo "echo never > /sys/kernel/mm/transparent_hugepage/defrag" >> /etc/rc.d/rc.l
 echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.d/rc.local
 
 # ssh login without authetication
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa -q
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 sed -i s/^"#PermitRootLogin yes"/"PermitRootLogin yes"/ /etc/ssh/sshd_config
 sed -i /^"PermitRootLogin yes"/a\\"RSAAuthentication yes" /etc/ssh/sshd_config
