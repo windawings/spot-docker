@@ -4,7 +4,7 @@
 yum install -q -y wget
 wget -q https://repo.mysql.com/mysql57-community-release-el7.rpm
 yum localinstall -q -y mysql57-community-release-el7.rpm
-yum install -q -y mysql-community-server
+yum install -q -y mysql*
 
 # copy mysql connector
 cp /usr/java/latest/mysql-connector-java.jar /opt/cm/share/cmf/lib/
